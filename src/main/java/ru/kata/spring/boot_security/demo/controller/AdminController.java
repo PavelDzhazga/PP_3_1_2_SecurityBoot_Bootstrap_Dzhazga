@@ -10,6 +10,7 @@ import org.springframework.web.bind.annotation.PatchMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
 import ru.kata.spring.boot_security.demo.model.Role;
 import ru.kata.spring.boot_security.demo.model.User;
 import ru.kata.spring.boot_security.demo.service.RoleService;
@@ -18,7 +19,7 @@ import ru.kata.spring.boot_security.demo.service.UserService;
 import java.util.List;
 
 @Controller
-@RequestMapping("/admin")
+@RequestMapping( "/admin")
 public class AdminController {
 
     private final UserService userService;
@@ -39,9 +40,6 @@ public class AdminController {
         User user = new User();
         model.addAttribute("user", user);
         List<Role> roles = roleService.getAllRoles();
-        roles.clear();
-        roles.add(roleService.getRoleById(1L));
-        roles.add(roleService.getRoleById(2L));
         model.addAttribute("roleList", roles);
         return "new";
     }
@@ -49,7 +47,9 @@ public class AdminController {
     @PostMapping("/new")
     public String createUser(@ModelAttribute("user") User user) { //todo
         user.setPassword(passwordEncoder.encode(user.getPassword()));
+
         userService.createUser(user);
+
         return "redirect:/admin";
     }
 
@@ -76,7 +76,7 @@ public class AdminController {
         return "edit";
     }
 
-    @PatchMapping("edit/{id}")
+    @PostMapping("edit/{id}")
     public String edit(@ModelAttribute("user") User user, @PathVariable("id") long id) {
         userService.updateUser(id, user);
         return "redirect:/admin";
@@ -84,7 +84,7 @@ public class AdminController {
 
     // Delete
 
-    @DeleteMapping("/delete/{id}")
+    @PostMapping("/delete/{id}")
     public String deleteUser(@PathVariable("id") Long id) {
         userService.deleteUser(id);
         return "redirect:/admin";

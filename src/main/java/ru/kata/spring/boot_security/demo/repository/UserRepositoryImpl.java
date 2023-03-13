@@ -8,6 +8,7 @@ import ru.kata.spring.boot_security.demo.model.User;
 import javax.persistence.EntityManager;
 import javax.persistence.TypedQuery;
 import java.util.List;
+import java.util.stream.Collectors;
 
 @Repository
 public class UserRepositoryImpl implements UserRepository{
@@ -51,8 +52,9 @@ public class UserRepositoryImpl implements UserRepository{
 
     @Override
     public void deleteUser(Long id) {
-        entityManager.createQuery(
-                "DELETE User WHERE id = :id").setParameter("id", id).executeUpdate();
+        entityManager.createQuery("DELETE User WHERE id =: id")
+                .setParameter("id", id)
+                .executeUpdate();
 
     }
 
@@ -64,16 +66,14 @@ public class UserRepositoryImpl implements UserRepository{
 
     @Override
     public List<User> findUser(User user) {
-        TypedQuery<User> query = entityManager.createQuery("from User where username=:nm and lastName=:lnm and email=:eml", User.class);
-        query.setParameter("nm", user.getUsername());
-        query.setParameter("lnm", user.getLastName());
+        TypedQuery<User> query = entityManager.createQuery("from User where email=:eml", User.class);
         query.setParameter("eml", user.getEmail());
         return query.getResultList();
     }
 
     @Override
     public User getUserByUsername(String username) {
-        return entityManager.createQuery("from User where username=:username", User.class)
+        return entityManager.createQuery("from User where email=:username", User.class)
                 .setParameter("username", username).getSingleResult();
     }
 }

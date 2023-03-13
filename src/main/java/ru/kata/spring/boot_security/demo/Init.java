@@ -2,6 +2,7 @@ package ru.kata.spring.boot_security.demo;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.CommandLineRunner;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Component;
 import ru.kata.spring.boot_security.demo.model.Role;
 import ru.kata.spring.boot_security.demo.model.User;
@@ -17,21 +18,25 @@ public class Init implements CommandLineRunner {
     private final UserService userService;
     private final RoleService roleService;
 
+    private final PasswordEncoder passwordEncoder;
+
     @Autowired
-    public Init(UserService userService, RoleService roleService) {
+    public Init(UserService userService, RoleService roleService, PasswordEncoder passwordEncoder) {
         this.userService = userService;
         this.roleService = roleService;
+        this.passwordEncoder = passwordEncoder;
     }
 
     @Override
     public void run(String... args)  {
+        Role roleAdmin = new Role("ROLE_ADMIN");
+        Role roleUser = new Role("ROLE_USER");
+
         if (roleService.getAllRoles().isEmpty()) {
-            Role roleAdmin = new Role("ROLE_ADMIN");
-            Role roleUser = new Role("ROLE_USER");
 
             roleService.addRole(roleAdmin);
             roleService.addRole(roleUser);
-
+        }
             Set<Role> setAdmin = new HashSet<>();
             Set<Role> setUser = new HashSet<>();
 
@@ -39,13 +44,15 @@ public class Init implements CommandLineRunner {
             setAdmin.add(roleUser);
             setUser.add(roleUser);
 
-            User admin = new User("Rex","lastname","rex@mail.ru", "password",setAdmin);
-            User user = new User("Ivan", "Ivanov", "ivanov@mail.ru", "password",setUser);
+            User admin = new User("Rex","lastname","rex@mail.ru",
+                    passwordEncoder.encode("password"),setAdmin);
+            User user = new User("Ivan", "Ivanov", "ivanov@mail.ru",
+                    passwordEncoder.encode("password"),setUser);
             userService.createUser(admin);
             userService.createUser(user);
 
 
 
-        }
+
     }
 }
