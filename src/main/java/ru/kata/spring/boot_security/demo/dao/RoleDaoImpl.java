@@ -1,4 +1,4 @@
-package ru.kata.spring.boot_security.demo.repository;
+package ru.kata.spring.boot_security.demo.dao;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
@@ -8,11 +8,11 @@ import javax.persistence.EntityManager;
 import java.util.List;
 
 @Repository
-public class RoleRepositoryImpl implements RoleRepository {
+public class RoleDaoImpl implements RoleDao {
     private final EntityManager entityManager;
 
     @Autowired
-    public RoleRepositoryImpl(EntityManager entityManager) {
+    public RoleDaoImpl(EntityManager entityManager) {
         this.entityManager = entityManager;
     }
 

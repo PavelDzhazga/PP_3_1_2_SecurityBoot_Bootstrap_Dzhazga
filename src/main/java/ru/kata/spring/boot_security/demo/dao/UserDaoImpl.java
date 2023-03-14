@@ -1,4 +1,4 @@
-package ru.kata.spring.boot_security.demo.repository;
+package ru.kata.spring.boot_security.demo.dao;
 
 
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
@@ -10,12 +10,12 @@ import javax.persistence.TypedQuery;
 import java.util.List;
 
 @Repository
-public class UserRepositoryImpl implements UserRepository{
+public class UserDaoImpl implements UserDao {
 
     private final EntityManager entityManager;
 
 
-    public UserRepositoryImpl(EntityManager entityManager) {
+    public UserDaoImpl(EntityManager entityManager) {
         this.entityManager = entityManager;
     }
 

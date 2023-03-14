@@ -6,58 +6,62 @@ import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import ru.kata.spring.boot_security.demo.model.User;
-import ru.kata.spring.boot_security.demo.repository.UserRepository;
+import ru.kata.spring.boot_security.demo.dao.UserDao;
 
 import java.util.List;
 
 @Service
-@Transactional
 public class UserServiceImpl implements UserService, UserDetailsService {
 
-    private final UserRepository userRepository;
+    private final UserDao userDao;
 
-    public UserServiceImpl(UserRepository userRepository) {
-        this.userRepository = userRepository;
+    public UserServiceImpl(UserDao userDao) {
+        this.userDao = userDao;
     }
 
     @Override
     public User getUser(Long id) {
-        return userRepository.getUser(id);
+        return userDao.getUser(id);
     }
 
     @Override
     public List<User> getList() {
-        return userRepository.getList();
+        return userDao.getList();
     }
 
     @Override
+    @Transactional
     public void updateUser(Long id, User user) {
-        userRepository.updateUser(id, user);
+        userDao.updateUser(id, user);
     }
 
     @Override
+    @Transactional
     public void createUser(User user) {
-        userRepository.createUser(user);
+        userDao.createUser(user);
     }
 
     @Override
+    @Transactional
     public void deleteUser(Long id) {
-        userRepository.deleteUser(id);
+        userDao.deleteUser(id);
 
     }
 
     @Override
+    @Transactional
     public void deleteUser(User user) {
-        userRepository.deleteUser(user);
+        userDao.deleteUser(user);
     }
 
     @Override
     public List<User> findUser(User user) {
-        return userRepository.findUser(user);
+        return userDao.findUser(user);
     }
 
     @Override
+    @Transactional
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
-        return userRepository.getUserByUsername(username);
+        return userDao.getUserByUsername(username);
     }
 }

@@ -4,20 +4,20 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import ru.kata.spring.boot_security.demo.model.User;
-import ru.kata.spring.boot_security.demo.repository.UserRepository;
+import ru.kata.spring.boot_security.demo.dao.UserDao;
 
 @Service
 public class RegistrationService {
 
-    private final UserRepository userRepository;
+    private final UserDao userDao;
 
     @Autowired
-    public RegistrationService(UserRepository userRepository) {
-        this.userRepository = userRepository;
+    public RegistrationService(UserDao userDao) {
+        this.userDao = userDao;
     }
 
     @Transactional
     public void register(User user) {
-        userRepository.createUser(user);
+        userDao.createUser(user);
     }
 }
