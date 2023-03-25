@@ -41,6 +41,21 @@ public class User implements UserDetails{
     @Column(name = "password")
     private String password;
 
+    @Column(name = "age")
+    private int age;
+
+    public int getAge() {
+        return age;
+    }
+
+    public void setAge(int age) {
+        this.age = age;
+    }
+
+    public User(int age) {
+        this.age = age;
+    }
+
     @ManyToMany(cascade = {CascadeType.MERGE})
     @Fetch(FetchMode.JOIN)
     @JoinTable(name = "users_role",

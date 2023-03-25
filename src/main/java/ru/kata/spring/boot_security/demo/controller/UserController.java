@@ -7,13 +7,15 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import ru.kata.spring.boot_security.demo.model.User;
 
+import java.security.Principal;
+
 @Controller
-@RequestMapping("/user")
 public class UserController {
 
-    @GetMapping
-    public String userView(Model model) {
-        User user = (User) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+    @GetMapping("/user")
+    public String show(Principal principal, Model model) {
+        User user = new User();
+        user.getUsername();
         model.addAttribute("user", user);
         return "user";
     }
