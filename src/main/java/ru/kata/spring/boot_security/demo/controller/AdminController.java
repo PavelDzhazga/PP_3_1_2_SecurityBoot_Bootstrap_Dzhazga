@@ -34,13 +34,8 @@ public class AdminController {
 
     // Create
     @PostMapping("")
-    public String createUser(@ModelAttribute("user") User user, Model model) { //todo
-        User newUser = new User();
-        model.addAttribute("user", newUser);
-        List<Role> roles = roleService.getAllRoles();
-        model.addAttribute("roleList", roles);
-        user.setPassword(passwordEncoder.encode(user.getPassword()));
-        userService.createUser(user);
+    public String createUser(@ModelAttribute("user") User user) { //todo
+       userService.createUser(user);
         return "redirect:/admin";
     }
 
