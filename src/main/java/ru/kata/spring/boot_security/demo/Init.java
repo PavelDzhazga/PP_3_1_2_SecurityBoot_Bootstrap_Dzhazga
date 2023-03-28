@@ -28,7 +28,7 @@ public class Init implements CommandLineRunner {
     }
 
     @Override
-    public void run(String... args)  {
+    public void run(String... args) {
         Role roleAdmin = new Role("ROLE_ADMIN");
         Role roleUser = new Role("ROLE_USER");
 
@@ -37,21 +37,19 @@ public class Init implements CommandLineRunner {
             roleService.addRole(roleAdmin);
             roleService.addRole(roleUser);
         }
-            Set<Role> setAdmin = new HashSet<>();
-            Set<Role> setUser = new HashSet<>();
+        Set<Role> setAdmin = new HashSet<>();
+        Set<Role> setUser = new HashSet<>();
 
-            setAdmin.add(roleAdmin);
-            setAdmin.add(roleUser);
-            setUser.add(roleUser);
+        setAdmin.add(roleAdmin);
+        setAdmin.add(roleUser);
+        setUser.add(roleUser);
 
-            User admin = new User("Rex","lastname","rex@mail.ru",
-                    passwordEncoder.encode("password"),setAdmin);
-            User user = new User("Ivan", "Ivanov", "ivanov@mail.ru",
-                    passwordEncoder.encode("password"),setUser);
-            userService.createUser(admin);
-            userService.createUser(user);
-
-
+        User admin = new User("Rex", "lastname", "rex@mail.ru",
+                passwordEncoder.encode("password"), setAdmin);
+        User user = new User("Ivan", "Ivanov", "ivanov@mail.ru",
+                passwordEncoder.encode("password"), setUser);
+        userService.createUser(admin);
+        userService.createUser(user);
 
 
     }

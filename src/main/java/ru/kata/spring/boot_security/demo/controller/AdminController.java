@@ -11,11 +11,10 @@ import ru.kata.spring.boot_security.demo.service.RoleService;
 import ru.kata.spring.boot_security.demo.service.UserService;
 import ru.kata.spring.boot_security.demo.service.UserServiceImpl;
 
-import java.security.Principal;
 import java.util.List;
 
 @Controller
-@RequestMapping( "/admin")
+@RequestMapping("/admin")
 public class AdminController {
 
     private final UserService userService;
@@ -60,7 +59,6 @@ public class AdminController {
         userService.deleteUser(id);
         return "redirect:/admin";
     }
-
 
 
     @GetMapping()
