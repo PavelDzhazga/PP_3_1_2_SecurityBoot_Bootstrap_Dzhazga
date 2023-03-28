@@ -5,12 +5,13 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
-import ru.kata.spring.boot_security.demo.Init;
 import ru.kata.spring.boot_security.demo.model.Role;
 import ru.kata.spring.boot_security.demo.model.User;
 import ru.kata.spring.boot_security.demo.service.RoleService;
 import ru.kata.spring.boot_security.demo.service.UserService;
+import ru.kata.spring.boot_security.demo.service.UserServiceImpl;
 
+import java.security.Principal;
 import java.util.List;
 
 @Controller
@@ -21,11 +22,14 @@ public class AdminController {
     private final RoleService roleService;
     private final PasswordEncoder passwordEncoder;
 
+    private final UserServiceImpl userServiceimpl;
+
     @Autowired
-    public AdminController(UserService userService, RoleService roleService, PasswordEncoder passwordEncoder) {
+    public AdminController(UserService userService, RoleService roleService, PasswordEncoder passwordEncoder, UserServiceImpl userServiceimpl) {
         this.userService = userService;
         this.roleService = roleService;
         this.passwordEncoder = passwordEncoder;
+        this.userServiceimpl = userServiceimpl;
     }
 
 
@@ -58,15 +62,14 @@ public class AdminController {
     }
 
 
+
     @GetMapping()
     public String show(Model model, User admin) {
-
         model.addAttribute("admin", admin);
         model.addAttribute("users", userService.getList());
         model.addAttribute("userRoles", roleService.getAllRoles());
         model.addAttribute("userNew", new User());
         model.addAttribute("rolesNew", roleService.getAllRoles());
-
         return "admin";
     }
 }
