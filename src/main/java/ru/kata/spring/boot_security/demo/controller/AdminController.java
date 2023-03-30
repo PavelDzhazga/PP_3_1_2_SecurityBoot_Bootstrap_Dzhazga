@@ -4,6 +4,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 import ru.kata.spring.boot_security.demo.model.Role;
 import ru.kata.spring.boot_security.demo.model.User;
@@ -11,7 +12,9 @@ import ru.kata.spring.boot_security.demo.service.RoleService;
 import ru.kata.spring.boot_security.demo.service.UserService;
 import ru.kata.spring.boot_security.demo.service.UserServiceImpl;
 
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 @Controller
 @RequestMapping("/admin")
@@ -35,9 +38,12 @@ public class AdminController {
     // Create
     @PostMapping("")
     public String createUser(@ModelAttribute("user") User user) { //todo
+        user.setPassword(passwordEncoder.encode(user.getPassword()));
        userService.createUser(user);
         return "redirect:/admin";
     }
+
+
 
     //Update
     @PostMapping("/{id}")
@@ -61,8 +67,11 @@ public class AdminController {
         model.addAttribute("admin", admin);
         model.addAttribute("users", userService.getList());
         model.addAttribute("userRoles", roleService.getAllRoles());
-        model.addAttribute("userNew", new User());
-        model.addAttribute("rolesNew", roleService.getAllRoles());
+
+        User user = new User();
+        model.addAttribute("userNew", user);
+        List<Role> roles = roleService.getAllRoles();
+        model.addAttribute("rolesNew", roles);
         return "admin";
     }
 }

@@ -305,7 +305,9 @@
               <div class="card">
                 <h5 class="card-header">Add new user</h5>
                 <div class="card-body">
+
                   <!---форма добавления users--->
+
                   <div class="container mt-2 col-sm-4 text-center">
                     <form th:action="@{/admin}" th:method="POST" th:object="${userNew}">
                       <div class="form-group">
@@ -341,8 +343,8 @@
                       <div class="form-group">
                         <label for="rolesUser" class="font-weight-bold">Role</label>
                         <select multiple class="custom-select" size="2" id="rolesUser" name="roleList">
-                          <option th:each="role : ${rolesNew}" th:value="${role.id}">
-                            <th:block th:text="${role.getName()}"></th:block>
+                          <option th:each="role : ${rolesNew}" th:value="*{roles}">
+                            <th:block th:text="${role.getTrimName()}"></th:block>
                           </option>
                         </select>
                       </div>

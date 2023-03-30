@@ -25,6 +25,7 @@ public class UserServiceImpl implements UserService, UserDetailsService {
     }
 
     @Override
+    @Transactional(readOnly = true)
     public List<User> getList() {
         return userDao.getList();
     }
