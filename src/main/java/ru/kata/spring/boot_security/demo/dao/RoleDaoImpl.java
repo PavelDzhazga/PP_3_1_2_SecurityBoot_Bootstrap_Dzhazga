@@ -1,6 +1,5 @@
 package ru.kata.spring.boot_security.demo.dao;
 
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 import ru.kata.spring.boot_security.demo.model.Role;
 
@@ -11,7 +10,6 @@ import java.util.List;
 public class RoleDaoImpl implements RoleDao {
     private final EntityManager entityManager;
 
-    @Autowired
     public RoleDaoImpl(EntityManager entityManager) {
         this.entityManager = entityManager;
     }
